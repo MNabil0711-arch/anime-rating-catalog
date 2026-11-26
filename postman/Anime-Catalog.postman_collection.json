@@ -1,0 +1,48 @@
+{
+  "info": {
+    "name": "Anime Rating Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3000" },
+    { "key": "anime_id", "value": "PASTE_ID_DI_SINI" }
+  ],
+  "item": [
+    { "name": "Get All Anime", "request": { "method": "GET", "url": "{{base_url}}/anime" } },
+    { "name": "Search by Title", "request": { "method": "GET", "url": "{{base_url}}/anime?search=fullmetal" } },
+    { "name": "Filter Genre + Min Rating + Sort", "request": { "method": "GET", "url": "{{base_url}}/anime?genre=action&minRating=8&sort=-rating" } },
+    { "name": "Get Anime By ID", "request": { "method": "GET", "url": "{{base_url}}/anime/{{anime_id}}" } },
+    {
+      "name": "Create Anime",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Fullmetal Alchemist: Brotherhood\",\n  \"genre\": [\"Action\", \"Adventure\", \"Fantasy\"],\n  \"episodes\": 64,\n  \"status\": \"completed\",\n  \"rating\": 9.1,\n  \"releaseYear\": 2009,\n  \"synopsis\": \"Dua bersaudara mencari Philosopher's Stone.\"\n}"
+        },
+        "url": "{{base_url}}/anime"
+      }
+    },
+    {
+      "name": "Update Anime",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"rating\": 9.5\n}" },
+        "url": "{{base_url}}/anime/{{anime_id}}"
+      }
+    },
+    { "name": "Delete Anime", "request": { "method": "DELETE", "url": "{{base_url}}/anime/{{anime_id}}" } },
+    { "name": "Error: Invalid ID (400)", "request": { "method": "GET", "url": "{{base_url}}/anime/abc123" } },
+    {
+      "name": "Error: Validation Failed (400)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"rating\": 15\n}" },
+        "url": "{{base_url}}/anime"
+      }
+    }
+  ]
+}
